@@ -1,0 +1,53 @@
+h1{
+    text-align: center;
+}
+.site-about{
+    margin-top: 30vh;
+} 
+.site-login{
+    margin-top: 20vh;
+}
+.map-block{
+    height: 60vh;
+    width: 100%;
+}
+.point-form form .row{
+    display: flex;
+    align-items: flex-end;
+}
+.points-block__item-btns .btn{
+    width: 100%;
+    margin: 5px;
+}
+.btn-dark{
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+.btn-dark:hover {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+}
+.btn-dark:focus {
+    color: #fff;
+}
+.points-block{
+    height: 60vh;
+    overflow: auto;
+}
+.points-block__item{
+    padding: 10px 15px;
+    border: 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.7s;
+    margin-bottom: 5px;
+}
+.points-block__item:hover, .points-block__item.active{
+    background: #c64e32;
+    color: #fff;
+}
+.help-block{
+    display: none;
+}
