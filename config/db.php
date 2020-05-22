@@ -3,9 +3,9 @@
 return [
     
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=us-cdbr-east-06.cleardb.net;dbname=heroku_3b1d4bc0f3dcf80',
-    'username' => 'bcf208f6a47abe',
-    'password' => '90a3adf1',
+    'dsn' => 'mysql:host=us-cdbr-east-06.cleardb.net;dbname=heroku_93fc8f87d34787f',
+    'username' => 'bc94c0361142b9',
+    'password' => '1e9f205f',
     'charset' => 'utf8',
 
     // Schema cache options (for production environment)
