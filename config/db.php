@@ -1,6 +1,6 @@
 <?php
 
-/*return [
+return [
     
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=us-cdbr-east-06.cleardb.net;dbname=heroku_93fc8f87d34787f',
@@ -12,9 +12,9 @@
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
     //'schemaCache' => 'cache',
-];*/
+];
 
-return [
+/*return [
     'class' => 'yii\db\Connection',
     'dsn' => 'mysql:host=localhost;dbname=map-test',
     'username' => 'root',
@@ -25,4 +25,4 @@ return [
     //'enableSchemaCache' => true,
     //'schemaCacheDuration' => 60,
     //'schemaCache' => 'cache',
-];
+];*/
