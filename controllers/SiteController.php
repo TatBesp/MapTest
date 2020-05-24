@@ -13,6 +13,7 @@ use app\models\SignupForm;
 use app\models\User;
 use app\models\Point;
 use yii\web\NotFoundHttpException;
+use yii\helpers\Html;
 class SiteController extends Controller
 {
     /**
@@ -71,17 +72,18 @@ class SiteController extends Controller
         else{
             $model = new Point();
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-               
+                $active_point_id = $model->point_id;
+                $model = new Point();
             }
             $data = Point::getAll();
             return $this->render('index',[
                 'points'=>$data['points'],
                 'model' => $model,
+                'active_point_id' => $active_point_id,
             ]);
             //getMapPoints();
            
-        }
-
+        }    
         
     }
 
@@ -126,7 +128,7 @@ class SiteController extends Controller
             $model->load(Yii::$app->request->post());
             if($model->signup())
             {
-                return $this->redirect(['login']);
+               return $this->redirect(['index']);
             }
         }
         return $this->render('signup', ['model'=>$model]);
@@ -182,11 +184,79 @@ class SiteController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    public function actionDelete($id)
+    {
+        $request = Yii::$app->request;
+        $this->findModel($id)->delete();
+
+        if($request->isAjax){
+
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>'#points-data'];
+            //getMapPoints();
+        }else{
+
+            return $this->redirect(['index']);
+        }
+
+
+    }
+    public function actionUpdate($id)
+    {
+        $request = Yii::$app->request;
+        $model = $this->findModel($id);       
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            if($request->isGet){
+                return [
+                    'title'=> "Update Point #".$id,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Закрыть',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Сохранить',['class'=>'btn btn-primary','type'=>"submit"])
+                ];         
+            }else if($model->load($request->post()) && $model->save()){
+                $active_point_id = $model->point_id;
+                return [
+                    'forceClose'=>true,
+                    'forceReload'=>'#points-data',
+                    'active_point_id'=> $active_point_id,
+                ];
+                //getMapPoints();        
+            }else{
+                 return [
+                    'title'=> "Update Point #".$id,
+                    'content'=>$this->renderAjax('update', [
+                        'model' => $model,
+                    ]),
+                    'footer'=> Html::button('Закрыть',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Сохранить',['class'=>'btn btn-primary','type'=>"submit"])
+                ];        
+            }
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            if ($model->load($request->post()) && $model->save()) {
+                //return $this->redirect(['index']);
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+        }
+    }
     /*private function getMapPoints(){
-        $points = Point::getAll();
+        $data = Point::getAll();
+        $points = $data['points'];
         file_put_contents('my.json', 'w');
         if($points){
-            foreach($points['points'] as $point){
+            foreach($points as $point){
                 
                 $map_points[] = array(
                                 "type"=>"Feature",
@@ -204,4 +274,5 @@ class SiteController extends Controller
             file_put_contents('my.json', json_encode($map_points));
             }
     }*/
+    
 }

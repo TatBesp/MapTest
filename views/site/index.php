@@ -3,31 +3,31 @@
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 use yii\bootstrap\Modal;
-use kartik\grid\GridView;
 use johnitvn\ajaxcrud\CrudAsset; 
-use johnitvn\ajaxcrud\BulkButtonWidget;
 use yii\widgets\Pjax;
 $this->title = 'Map Test';
 CrudAsset::register($this);
 ?>
-<?php Pjax::begin(); ?>
-<div class="site-index"  id="crud-datatable-pjax" data-pjax-container="" data-pjax-push-state data-pjax-timeout="1000">
+
+<div class="site-index" >
     <div class="body-content">
+    
+    <?php Pjax::begin(['id' => 'points-data']);?>
     <div class="point-form">
         <?= $this->render('_form', [
             'model' => $model,
         ]) ?>
-        <a class="btn btn-default" href="/point/create" title="Create new Points" role="modal-remote"><i class="glyphicon glyphicon-plus"></i></a>
-</div>
+       </div>
+       <?= $active_point_id ?>
         <div class="row">
             <div class="col-lg-8">
-                <div class="map-block" id="map">
+            <div class="map-block" id="map">
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="points-block">
                     <?php foreach($points as $point):?>
-                        <div class="points-block__item">
+                        <div class="points-block__item <?php if($point->point_id==$active_point_id): ?>active<?php endif ?>" id="point_id-<?=$point->point_id?> ">
                             <div class="row">
                                 <div class="col-lg-8">
                                     <div class="points-block__item-desc">
@@ -39,15 +39,15 @@ CrudAsset::register($this);
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="points-block__item-btns">
-                                    <?= Html::a('Изменить', ['point/update', 'id' => $point->point_id], 
+                                    <?= Html::a('Изменить', ['update', 'id' => $point->point_id], 
                                     ['class' => 'btn btn-dark',
-                                    'data-pjax' => true,
+                                    'data-pjax' => '#points-data',
                                     'role' => 'modal-remote',
                                     'data-toggle' => 'tooltip']) ?>
-                                    <?= Html::a('Удалить', ['point/delete', 'id' => $point->point_id], [
+                                    <?= Html::a('Удалить', ['delete', 'id' => $point->point_id], [
                                         'class' => 'btn btn-dark',
                                         'aria-label' => 'Delete', 
-                                        'data-pjax' => true, 
+                                        'data-pjax' => '#points-data',
                                         'role' => 'modal-remote', 
                                         'data' => [
                                             'confirm-title' => 'Вы уверены?',
@@ -66,7 +66,6 @@ CrudAsset::register($this);
         </div>                                                           
     </div>
 </div>
-<?php Pjax::end(); ?>
 <?php file_put_contents('my.json', 'w');
         if($points){
             foreach($points as $point){
@@ -87,9 +86,14 @@ CrudAsset::register($this);
             file_put_contents('my.json', json_encode($map_points));
             }
             ?>
-
+<?php Pjax::end(); ?>
 <?php Modal::begin([
+    'options' => ['data' => ['pjax' => true]],
     "id"=>"ajaxCrudModal",
     "footer"=>"",// always need it for jquery plugin
 ])?>
+
 <?php Modal::end(); ?>
+
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3d1d1517-9f79-40c9-98c9-f882fcfe55ba" type="text/javascript"></script>

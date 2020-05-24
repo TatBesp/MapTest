@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 <div class="point-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([ 'options' => ['data' => ['pjax' => true]],]); ?>
 
     <?= $form->field($model, 'point_name')->textInput(['maxlength' => true]) ?>
 
@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
   
 	<?php if (!Yii::$app->request->isAjax){ ?>
 	  	<div class="form-group">
-	        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	        <?= Html::submitButton('Изменить', ['class' => $model->isNewRecord ? 'btn btn-dark' : 'btn btn-primary']) ?>
 	    </div>
 	<?php } ?>
 

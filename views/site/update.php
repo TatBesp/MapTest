@@ -7,7 +7,7 @@ use yii\helpers\Html;
 ?>
 <div class="point-update">
 
-    <?= $this->render('_form', [
+    <?= $this->render('_form-update', [
         'model' => $model,
     ]) ?>
 

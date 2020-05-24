@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-
 /**
  * This is the model class for table "point".
  *
@@ -36,7 +35,12 @@ class Point extends \yii\db\ActiveRecord
             [['point_name'], 'string'],
             [[ 'latitude'], 'double' , 'min' => -90,  'max' => 90],
             [[ 'longitude'], 'double' , 'min' => -180,  'max' => 180],
-           // [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'user_id']],        
+            [['user_id','point_name'], 'unique', 
+            'targetAttribute' => ['user_id','point_name'],
+            'message' => Yii::t('app', 'Точка с таким названием уже есть')],
+            [['user_id','latitude', 'longitude'], 'unique', 
+            'targetAttribute' => ['user_id','latitude', 'longitude'],
+            'message' => Yii::t('app', 'Точка с такими координатами уже есть')],        
         ];
     }
     /**
@@ -58,6 +62,7 @@ class Point extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
     public function getUser()
     {
         return $this->hasOne(User::className(), ['user_id' => 'user_id']);

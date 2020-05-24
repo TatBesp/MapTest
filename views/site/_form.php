@@ -10,7 +10,7 @@ use yii\widgets\Pjax;
 
 <div class="point-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([ 'options' => ['data' => ['pjax' => true]],]); ?>
     <div class="row">
         <div class="col-lg-3 col-md-12">
             <?= $form->field($model, 'point_name')->textInput(['maxlength' => true]) ?>
@@ -22,11 +22,11 @@ use yii\widgets\Pjax;
             <?= $form->field($model, 'longitude')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-3 col-md-12">
-        <?php //if (!Yii::$app->request->isAjax){ ?>
+        
             <div class="form-group">
-                    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-dark']) ?>
+                    <?= Html::submitButton('Добавить', ['class' => 'btn btn-dark', 'id'=>'add-point']) ?>
                 </div>
-                <?php //} ?>	
+              
         </div>
     </div>
     <?php ActiveForm::end(); ?>

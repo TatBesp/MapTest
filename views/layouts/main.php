@@ -29,7 +29,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Map Test',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -79,7 +79,6 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
-<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=3d1d1517-9f79-40c9-98c9-f882fcfe55ba" type="text/javascript"></script>
 <?php $this->endBody() ?>
 </body>
 </html>

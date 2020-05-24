@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use yii\base\Model;
+use Yii;
 class SignupForm extends Model
 {
     public $login;
@@ -10,6 +11,7 @@ class SignupForm extends Model
     {
         return [
             [['login','password'], 'required'],
+            //['login', 'unique', 'message' => Yii::t('app', 'Этот логин занят')],
         ];
     }
     
@@ -19,7 +21,8 @@ class SignupForm extends Model
         {
             $user = new User();
             $user->attributes = $this->attributes;
-            return $user->create();
+            $user->create();
+            return Yii::$app->user->login($user);
         }
     }
 }
