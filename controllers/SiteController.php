@@ -71,6 +71,7 @@ class SiteController extends Controller
         
         else{
             $model = new Point();
+            $active_point_id = null;
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 $active_point_id = $model->point_id;
                 $model = new Point();
@@ -221,11 +222,10 @@ class SiteController extends Controller
                                 Html::button('Сохранить',['class'=>'btn btn-primary','type'=>"submit"])
                 ];         
             }else if($model->load($request->post()) && $model->save()){
-                $active_point_id = $model->point_id;
+
                 return [
                     'forceClose'=>true,
                     'forceReload'=>'#points-data',
-                    'active_point_id'=> $active_point_id,
                 ];
                 //getMapPoints();        
             }else{
